@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Lógica</title>
+</head>
+<body>
+
+    <h1>Sistema de Lógica</h1>
+
+    <form method="POST">
+
+        <h2>Binário para Decimal</h2>
+
+        <input type="text" name="binario">
+
+        <br><br>
+
+        <h2>Tabela Verdade</h2>
+
+        <label>A:</label>
+        <input type="number" name="a" min="0" max="1">
+
+        <br><br>
+
+        <label>B:</label>
+        <input type="number" name="b" min="0" max="1">
+
+        <br><br>
+
+        <button type="submit">Calcular</button>
+
+    </form>
+
+    {% if resultado_decimal != None %}
+
+        <h2>Resultado Binário</h2>
+        <p>{{ resultado_decimal }}</p>
+
+    {% endif %}
+
+    {% if resultado_logica %}
+
+        <h2>Resultado Tabela Verdade</h2>
+
+        <p>AND: {{ resultado_logica.and }}</p>
+        <p>OR: {{ resultado_logica.or }}</p>
+        <p>NOT A: {{ resultado_logica.not }}</p>
+
+    {% endif %}
+
+</body>
+</html>
