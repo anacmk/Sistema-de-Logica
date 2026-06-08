@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema Lógico — Matemática Computacional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@400;500;600&family=Akshar:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #E8E8E8;
+      height: 100vh;
+      font-family: 'Raleway', sans-serif;
+      color: #474747;
+      overflow: hidden;
+    }
+
+    .page {
+      position: relative;
+      width: 100%;
+      max-width: 1440px;
+      height: 100vh;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .circles-right {
+      position: absolute;
+      right: -130px;
+      top: 50%;
+      transform: translateY(-30%);
+      width: 558px;
+      height: 558px;
+      pointer-events: none;
+    }
+    .circles-right .c1,
+    .circles-right .c2,
+    .circles-right .c3 {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid #474747;
+    }
+    .circles-right .c1 { width: 558px; height: 558px; top: 0; left: 0; }
+    .circles-right .c2 { width: 478px; height: 478px; top: 54px; left: 53px; }
+    .circles-right .c3 { width: 438px; height: 438px; top: 96px; left: 93px; }
+
+    .circles-left {
+      position: absolute;
+      left: -130px;
+      top: 50%;
+      transform: translateY(-30%) scaleX(-1);
+      width: 558px;
+      height: 558px;
+      pointer-events: none;
+    }
+    .circles-left .c1,
+    .circles-left .c2,
+    .circles-left .c3 {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid #474747;
+    }
+    .circles-left .c1 { width: 558px; height: 558px; top: 0; left: 0; }
+    .circles-left .c2 { width: 478px; height: 478px; top: 54px; left: 53px; }
+    .circles-left .c3 { width: 438px; height: 438px; top: 96px; left: 93px; }
+
+    header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 43px 96px;
+    }
+
+    .logo-box {
+      position: relative;
+      width: 84px;
+      height: 84px;
+      flex-shrink: 0;
+    }
+    .logo-box .outer {
+      width: 84px;
+      height: 84px;
+      background: #474747;
+      border-radius: 8.4px;
+    }
+    .logo-box .inner {
+      position: absolute;
+      top: 8.4px; left: 8.4px;
+      width: 67.2px;
+      height: 67.2px;
+      background: #E8E8E8;
+      border-radius: 4.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-box .inner span {
+      font-family: 'Akshar', sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      color: #474747;
+      letter-spacing: -1px;
+    }
+
+    .logo-text h1 {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 35px;
+      color: #474747;
+    }
+    .logo-text p {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 23px;
+      color: #474747;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .hero .welcome {
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 38px;
+      margin-bottom: 4px;
+    }
+
+    .hero .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 75px;
+      line-height: 90px;
+      color: #474747;
+      margin-bottom: 24px;
+    }
+
+    .hero .description {
+      max-width: 351px;
+      font-size: 23px;
+      line-height: 27px;
+      color: #474747;
+      margin-bottom: 56px;
+    }
+
+    .btn-access {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 28px;
+      background: #474747;
+      border-radius: 18px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-access:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+    .btn-access span {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      font-size: 27px;
+      line-height: 32px;
+      color: #E8E8E8;
+      white-space: nowrap;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 24px;
+      left: 143px;
+      right: 143px;
+      margin: 0;
+      background: #F2F2F2;
+      box-shadow: 10px 8px 10px rgba(0,0,0,0.07);
+      border-radius: 20px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      z-index: 10;
+    }
+
+    .footer-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .footer-icon svg { width: 100%; height: 100%; }
+
+    .footer-label {
+      font-size: 20px;
+      color: #474747;
+      margin-right: 24px;
+      white-space: nowrap;
+    }
+
+    .footer-divider {
+      width: 1px;
+      height: 49px;
+      background: #474747;
+      margin-right: 24px;
+      flex-shrink: 0;
+    }
+
+    .footer-members {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: space-around;
+    }
+
+    .footer-members span { font-size: 20px; color: #474747; }
+
+    .footer-dot {
+      width: 6px;
+      height: 6px;
+      background: #474747;
+      border-radius: 50%;
+      margin: 0 16px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="circles-left">
+      <div class="c1"></div>
+      <div class="c2"></div>
+      <div class="c3"></div>
+    </div>
+
+    <div class="circles-right">
+      <div class="c1"></div>
+      <div class="c2"></div>
+      <div class="c3"></div>
+    </div>
+
+    <header>
+      <div class="logo-box">
+        <div class="outer"></div>
+        <div class="inner"><span>0|1</span></div>
+      </div>
+      <div class="logo-text">
+        <h1>SISTEMA LÓGICO</h1>
+        <p>Matemática Computacional</p>
+      </div>
+    </header>
+
+    <main class="hero">
+      <p class="welcome">BEM-VINDO(A) AO</p>
+      <h2 class="title">SISTEMA LÓGICO</h2>
+      <p class="description">
+        Converta números binários para decimal e explore operações lógicas por meio de tabelas verdade.
+      </p>
+      <a href="/sistema" class="btn-access">
+        <span>Acessar sistema</span>
+      </a>
+    </main>
+
+    <footer>
+      <div class="footer-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span class="footer-label">Integrantes</span>
+      <div class="footer-divider"></div>
+      <div class="footer-members">
+        <span>Beatriz Ventura Marques</span>
+        <div class="footer-dot"></div>
+        <span>Ana Carolina Medina</span>
+        <div class="footer-dot"></div>
+        <span>Emily da Silva Serafim</span>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

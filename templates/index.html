@@ -1,52 +1,381 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Sistema de Lógica</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Lógico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Akshar:wght@400&family=Mada:wght@600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #E8E8E8;
+            font-family: 'Raleway', sans-serif;
+            color: #474747;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .circles-left, .circles-right {
+            position: fixed;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .circles-left { left: -130px; }
+        .circles-right { right: -130px; }
+        .circles-left svg, .circles-right svg { display: block; }
+
+        .back-btn {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 28px 32px 0;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 25px;
+            color: #474747;
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .back-btn:hover { opacity: 0.7; }
+
+        .header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 32px 0;
+        }
+        .logo-box {
+            width: 84px;
+            height: 84px;
+            background: #474747;
+            border-radius: 8.4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .logo-inner {
+            width: 67.2px;
+            height: 67.2px;
+            background: #E8E8E8;
+            border-radius: 4.2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-inner span {
+            font-family: 'Akshar', sans-serif;
+            font-size: 32px;
+            color: #474747;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .header-text h1 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 500;
+            font-size: 30px;
+            line-height: 35px;
+            color: #474747;
+        }
+        .header-text p {
+            font-weight: 400;
+            font-size: 20px;
+            color: #474747;
+        }
+
+        .cards {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            padding: 40px 32px 0;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #F2F2F2;
+            box-shadow: 0px 8px 9px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            width: 371px;
+            min-height: 430px;
+            padding: 40px 32px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card h2 {
+            font-weight: 600;
+            font-size: 25px;
+            line-height: 29px;
+            color: #474747;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .card .subtitle {
+            font-weight: 400;
+            font-size: 20px;
+            color: #474747;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .styled-input {
+            width: 100%;
+            height: 58px;
+            background: #FBFBFB;
+            border: 1px solid #858585;
+            border-radius: 10px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px;
+            color: #474747;
+            padding: 0 18px;
+            outline: none;
+            margin-bottom: 24px;
+        }
+        .styled-input::placeholder { color: rgba(71,71,71,0.7); }
+        .styled-input:focus { border-color: #474747; }
+
+        .selects-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 24px;
+            width: 100%;
+            justify-content: center;
+        }
+        .select-label {
+            font-weight: 600;
+            font-size: 25px;
+            color: #474747;
+        }
+        .styled-select {
+            width: 115px;
+            height: 58px;
+            background: #FBFBFB;
+            border: 1px solid #858585;
+            border-radius: 10px;
+            font-family: 'Mada', sans-serif;
+            font-weight: 600;
+            font-size: 25px;
+            color: #474747;
+            padding: 0 10px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            text-align: center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='8' viewBox='0 0 13 8'%3E%3Cpath d='M1 1l5.5 5.5L12 1' stroke='%23474747' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        .btn-dark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 55px;
+            padding: 0 28px;
+            background: #474747;
+            border-radius: 18px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 25px;
+            color: #E8E8E8;
+            margin-bottom: 28px;
+            transition: opacity 0.15s;
+        }
+        .btn-dark:hover { opacity: 0.85; }
+
+        .result-label {
+            font-weight: 400;
+            font-size: 20px;
+            color: #474747;
+            margin-bottom: 6px;
+        }
+        .result-value {
+            font-family: 'Mada', sans-serif;
+            font-weight: 600;
+            font-size: 44px;
+            color: #474747;
+        }
+        .result-table {
+            width: 100%;
+            margin-top: 6px;
+        }
+        .result-table td {
+            font-family: 'Mada', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            color: #474747;
+            padding: 2px 8px;
+        }
+        .result-table td:first-child {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+            text-align: right;
+            padding-right: 12px;
+        }
+
+        .footer {
+            position: relative;
+            z-index: 1;
+            margin: 40px 143px 32px;
+            background: #F2F2F2;
+            box-shadow: 10px 8px 10px rgba(0,0,0,0.07);
+            border-radius: 20px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            padding: 0 24px;
+        }
+        .footer-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            color: #474747;
+        }
+        .divider {
+            width: 1px;
+            height: 49px;
+            background: #474747;
+        }
+        .dot {
+            font-size: 28px;
+            color: #474747;
+            line-height: 1;
+        }
+
+        @media (max-width: 900px) {
+            .footer { margin: 32px 16px; }
+            .cards { gap: 24px; }
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Sistema de Lógica</h1>
+    <div class="circles-left">
+        <svg width="410" height="560" viewBox="0 0 410 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="0" cy="450" r="278" stroke="#474747" stroke-width="1"/>
+            <circle cx="0" cy="450" r="238" stroke="#474747" stroke-width="1"/>
+            <circle cx="0" cy="450" r="218" stroke="#474747" stroke-width="1"/>
+        </svg>
+    </div>
 
-    <form method="POST">
+    <div class="circles-right">
+        <svg width="410" height="560" viewBox="0 0 410 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="410" cy="450" r="278" stroke="#474747" stroke-width="1"/>
+            <circle cx="410" cy="450" r="238" stroke="#474747" stroke-width="1"/>
+            <circle cx="410" cy="450" r="218" stroke="#474747" stroke-width="1"/>
+        </svg>
+    </div>
 
-        <h2>Binário para Decimal</h2>
+    <a href="/" class="back-btn">&#8249; voltar</a>
 
-        <input type="text" name="binario">
+    <div class="header">
+        <div class="logo-box">
+            <div class="logo-inner">
+                <span>0|1</span>
+            </div>
+        </div>
+        <div class="header-text">
+            <h1>SISTEMA LÓGICO</h1>
+            <p>Matemática Computacional</p>
+        </div>
+    </div>
 
-        <br><br>
+    <div class="cards">
 
-        <h2>Tabela Verdade</h2>
+        <div class="card">
+            <h2>Binário para Decimal</h2>
+            <p class="subtitle">Digite um número binário</p>
+            <form method="POST" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+                <input class="styled-input" type="text" name="binario" placeholder="Ex: 1010"
+                    value="{{ request.form.get('binario', '') }}">
+                <button type="submit" name="acao" value="converter" class="btn-dark">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 16H17M17 16L14 13M17 16L14 19" stroke="#E8E8E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 8H7M7 8L10 5M7 8L10 11" stroke="#E8E8E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Converter
+                </button>
+                <p class="result-label">Resultado em Decimal</p>
+                {% if resultado_decimal is not none %}
+                    <p class="result-value">{{ resultado_decimal }}</p>
+                {% endif %}
+            </form>
+        </div>
 
-        <label>A:</label>
-        <input type="number" name="a" min="0" max="1">
+        <div class="card">
+            <h2>Tabela Verdade</h2>
+            <p class="subtitle">Escolha os valores de entrada</p>
+            <form method="POST" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+                <div class="selects-row">
+                    <span class="select-label">A:</span>
+                    <select class="styled-select" name="a">
+                        <option value="0" {% if request.form.get('a','0')=='0' %}selected{% endif %}>0</option>
+                        <option value="1" {% if request.form.get('a')=='1' %}selected{% endif %}>1</option>
+                    </select>
+                    <span class="select-label">B:</span>
+                    <select class="styled-select" name="b">
+                        <option value="0" {% if request.form.get('b','0')=='0' %}selected{% endif %}>0</option>
+                        <option value="1" {% if request.form.get('b')=='1' %}selected{% endif %}>1</option>
+                    </select>
+                </div>
+                <button type="submit" name="acao" value="gerar" class="btn-dark">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 12h16M12 4l8 8-8 8" stroke="#E8E8E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Gerar
+                </button>
+                <p class="result-label">Resultado</p>
+                {% if resultado_logica %}
+                    <table class="result-table">
+                        <tr><td>AND:</td><td>{{ resultado_logica.and }}</td></tr>
+                        <tr><td>OR:</td><td>{{ resultado_logica.or }}</td></tr>
+                        <tr><td>NOT A:</td><td>{{ resultado_logica.not }}</td></tr>
+                    </table>
+                {% endif %}
+            </form>
+        </div>
 
-        <br><br>
+    </div>
 
-        <label>B:</label>
-        <input type="number" name="b" min="0" max="1">
-
-        <br><br>
-
-        <button type="submit">Calcular</button>
-
-    </form>
-
-    {% if resultado_decimal != None %}
-
-        <h2>Resultado Binário</h2>
-        <p>{{ resultado_decimal }}</p>
-
-    {% endif %}
-
-    {% if resultado_logica %}
-
-        <h2>Resultado Tabela Verdade</h2>
-
-        <p>AND: {{ resultado_logica.and }}</p>
-        <p>OR: {{ resultado_logica.or }}</p>
-        <p>NOT A: {{ resultado_logica.not }}</p>
-
-    {% endif %}
+    <div class="footer">
+        <div class="footer-section">
+           <svg viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="35" height="35">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+            <span>Integrantes</span>
+        </div>
+        <div class="divider"></div>
+        <span>Beatriz Ventura Marques</span>
+        <span class="dot">•</span>
+        <span>Ana Carolina Medina</span>
+        <span class="dot">•</span>
+        <span>Emily da Silva Serafim</span>
+    </div>
 
 </body>
 </html>
